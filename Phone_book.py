@@ -21,6 +21,8 @@ def load_phone_book():
             return numbers_list
     except (FileExistsError, FileNotFoundError):
         return []
+    
+# ---- main code -------------------------------------------------------------
 
 if __name__ == '__main__':
     numbers_list = load_phone_book()
