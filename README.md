@@ -2,7 +2,7 @@
 
 ## General information
 Write the program that creates a phone book. User provides name and phone number.
-## Step by step
+## Description of activities
 1. Ask user if he wants to add a new phone number(and name) to the phone book.
 2. Update the phone book with the new phone number provided by the user.
 3. Save phone book as a new json.file
