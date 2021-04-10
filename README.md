@@ -5,6 +5,11 @@ Write the program that creates a phone book. User provides name and phone number
 2. Step by step
 *Start program with
 
+1. First ordered list item
+2. Another item
+⋅⋅* Unordered sub-list. 
+1. Actual numbers don't matter, just that it's a number
+⋅⋅1. Ordered sub-list
 
 
 Opis czynności
