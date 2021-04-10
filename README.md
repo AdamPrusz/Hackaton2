@@ -3,7 +3,7 @@
 1. General information
 Write the program that creates a phone book. User provides name and phone number.
 2. Step by step
-..*Start program with
+*Start program with
 
 
 
