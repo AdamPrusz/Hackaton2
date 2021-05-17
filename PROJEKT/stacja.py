@@ -11,21 +11,15 @@ from datetime import timedelta, datetime
 timeBefore = timedelta(days=5)
 searchDate = datetime.today() - timeBefore
 
-
-
-
 parameters = {
     'lat': float(input("Gimme latitude of your location ---> ")),
     'lon': float(input("Gimme longtitude of your location ---> ")),
     'appid': "ac51ba21006c4262bed2397dfb790822", # ID
     'start': int(searchDate.timestamp()),
     'end': int(datetime.today().timestamp())
-
 }
 
-
 r = requests.get("http://api.openweathermap.org/data/2.5/air_pollution/history", parameters)
-
 
 try:
     content = r.json()
@@ -33,8 +27,6 @@ except json.decoder.JSONDecodeError:
     print("Niepoprawny format")
 else:
     pprint(content)
-
-
 
 list_elements = content['list']
 for step in list_elements:
