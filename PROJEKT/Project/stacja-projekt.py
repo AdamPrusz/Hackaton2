@@ -3,12 +3,12 @@
 #sprawdenioe smogu i temperatury dla wybranych lokalizacji
 
 
-import requests
-import json
-from datetime import timedelta, datetime
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
-import numpy as np
+import requests #do Api
+import json #przeszktałcenie do json
+from datetime import timedelta, datetime #do dat
+import matplotlib.pyplot as plt #rysowanie wykresów
+from matplotlib.backends.backend_pdf import PdfPages #zapisywanie wykresu do pdf
+import numpy as np #wykresy
 import geo #plik, ktory ma metody zamienijąc nazwe miasta na dlugosc i szer. geog. (uzytkownik moze podac ulice, miasto
 # i kraj, ale tez tylko miasto,a i tak
 #zamieni to na dlugosc i szerokosc geograficzna, ktora potrzebna jest do zebrania danych. zamieniam to, bo w API dla
