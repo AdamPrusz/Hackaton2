@@ -1,9 +1,6 @@
-# Aplikacja sprawdzająca stan zanieczyszczenie powietrza w Polsce, dla wybranego miasta, dla dowolnie wybranych
-# stacji pomiarowych. Wygenerować conajmniej wykres np. dla dwutlenku węgla na podstawie pomiarów z danego dnia
-# zestawić jak się zmieniały pomiary co godzinę.
-
-# u mnie - co godzinę PM2,5 w ciągu doby
 #'%Y-%m-%d %H:%M:%S'
+
+#sprawdenioe smogu i temperatury dla wybranych lokalizacji
 
 
 import requests
@@ -12,9 +9,15 @@ from datetime import timedelta, datetime
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import numpy as np
-import geo
+import geo #plik, ktory ma metody zamienijąc nazwe miasta na dlugosc i szer. geog. (uzytkownik moze podac ulice, miasto
+# i kraj, ale tez tylko miasto,a i tak
+#zamieni to na dlugosc i szerokosc geograficzna, ktora potrzebna jest do zebrania danych. zamieniam to, bo w API dla
+#historycznych danych podajemy dlugosc i szerokos geog.
+
+
 
 def menu():
+    #Użytkownik wybiera jakie dane chce sprawdzić
     print("Welcome \n 1. Check PM 2.5 and PM 10 for the last 24hours \n 2. Check temperature for the last 24 hours")
     choice = input("Gimme the number: ")
 
@@ -26,6 +29,7 @@ def menu():
 
 
 def plotting_smog(x, y1, y2):
+    #rysowanie wykresu dla dwóch parametrow, np pm25 i pm10, temp i cisnienie
     plt.plot(x, y1, label="PM 2,5")
     plt.plot(x, y2, label="PM 10")
     plt.xlabel('Hours')
@@ -35,16 +39,19 @@ def plotting_smog(x, y1, y2):
     plt.savefig('smog.pdf')
     plt.show()
 
+
 def plotting_temp(x,y):
+    #wykres tylko dla jednego paramateru np temperatura godzinowo, wykres słupkowy
+    plt.bar(x, y)
     plt.xlabel('Temperature')
     plt.ylabel('Celcius degrees')
     plt.title('The graph of temperature in chosen location for the last 24 hours')
-    plt.plot(x, y)
     plt.savefig('temperature.pdf')
     plt.show()
 
 def smog():
-    timeBefore = timedelta(days=1)
+    #metoda ktora wyciaga PM25 i Pm10 z API
+    timeBefore = timedelta(days=1) #o ile chcemy sie cofnac days=1 bo 24h
     searchDate = datetime.today() - timeBefore
     user = input("Give me street, city or country name --> ")
     parameters = {
@@ -73,6 +80,7 @@ def smog():
     plotting_smog(days, pm25_values, pm10_values)
 
 def temperature():
+    #metoda wyciagajace temperature z API
     timeBefore = timedelta(days=1)
     searchDate = datetime.today() - timeBefore
 
