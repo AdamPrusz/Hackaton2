@@ -5,53 +5,44 @@
 import requests
 import json
 from pprint import pprint
-import webbrowser
-
 from datetime import timedelta, datetime
-timeBefore = timedelta(days=5)
-searchDate = datetime.today() - timeBefore
+import matplotlib.pyplot as plt
+import numpy as np
 
 
+def plotting(days, pm25_values):
+    x = np.array(days)
+    y = np.array(pm25_values)
+
+    plt.bar(x, y)
+    plt.show()
 
 
-parameters = {
-    'lat': float(input("Gimme latitude of your location ---> ")),
-    'lon': float(input("Gimme longtitude of your location ---> ")),
-    'appid': "ac51ba21006c4262bed2397dfb790822", # ID
-    'start': int(searchDate.timestamp()),
-    'end': int(datetime.today().timestamp())
+def main():
+    timeBefore = timedelta(days=1)
+    searchDate = datetime.today() - timeBefore
+    parameters = {
+        'lat': 51.767585686902,
+        'lon': 19.460340752842114,
+        'appid': "0fb8ce688518ffd7d1192443399712d7",
+        'start': int(searchDate.timestamp()),
+        'end': int(datetime.today().timestamp())
+    }
+    r = requests.get("http://api.openweathermap.org/data/2.5/air_pollution/history", parameters)
+    try:
+        content = r.json()
+    except json.decoder.JSONDecodeError:
+        print("Niepoprawny format")
 
-}
+    list_elements = content['list']
+    days = []
+    pm25_values = []
+    for step in list_elements:
+        days.append(datetime.utcfromtimestamp(step['dt']).strftime('%Y-%m-%d %H:%M:%S'))
+        components = step['components']
+        pm25_values.append(components['pm2_5'])
 
-
-r = requests.get("http://api.openweathermap.org/data/2.5/air_pollution/history", parameters)
-
-
-try:
-    content = r.json()
-except json.decoder.JSONDecodeError:
-    print("Niepoprawny format")
-else:
-    pprint(content)
-
-
-
-list_elements = content['list']
-for step in list_elements:
-    for i in list_elements[0]:
-        a = (list_elements[0][i])
-        print(a)
+    plotting(days, pm25_values)
 
 
-
-# for step in content:
-#     print(type(content[step]))
-# for step in content:
-#     for keys, values in enumerate(content[step]):
-#         if "pm2_5" in values:
-#             print("pm25")
-
-
-
-
-
+main()
