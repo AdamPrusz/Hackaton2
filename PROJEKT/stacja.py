@@ -2,28 +2,50 @@
 # stacji pomiarowych. Wygenerować conajmniej wykres np. dla dwutlenku węgla na podstawie pomiarów z danego dnia
 # zestawić jak się zmieniały pomiary co godzinę.
 
+# u mnie - co godzinę PM2,5 w ciągu doby
+#'%Y-%m-%d %H:%M:%S'
 import requests
 import json
 from pprint import pprint
 from datetime import timedelta, datetime
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 import numpy as np
+import geo
+
+def menu():
+    print("Welcomem \n 1. Check PM 2.5 \n 2. Check temperature")
+
+    choice = input()
+
+    if choice == '1':
+        main()
+
+    if choice == '2':
+        print("nice weather")
 
 
-def plotting(days, pm25_values):
-    x = np.array(days)
-    y = np.array(pm25_values)
 
-    plt.bar(x, y)
+
+def plotting(x, y1, y2):
+    plt.plot(x, y1, label="PM 2,5")
+    plt.plot(x, y2, label="PM 10")
+    plt.xlabel('Hours')
+    plt.ylabel('μg/m3')
+    plt.title('The graph of PM25 and PM10 in chosen location in the last 24 hours')
+    plt.legend()
+    plt.savefig('weather.pdf')
     plt.show()
+
 
 
 def main():
     timeBefore = timedelta(days=1)
     searchDate = datetime.today() - timeBefore
+    user = input("Give me street, city or country name --> ")
     parameters = {
-        'lat': 51.767585686902,
-        'lon': 19.460340752842114,
+        'lat': geo.geo_lat(user),
+        'lon': geo.geo_lon(user),
         'appid': "0fb8ce688518ffd7d1192443399712d7",
         'start': int(searchDate.timestamp()),
         'end': int(datetime.today().timestamp())
@@ -37,12 +59,14 @@ def main():
     list_elements = content['list']
     days = []
     pm25_values = []
+    pm10_values = []
     for step in list_elements:
-        days.append(datetime.utcfromtimestamp(step['dt']).strftime('%Y-%m-%d %H:%M:%S'))
+        days.append(datetime.utcfromtimestamp(step['dt']).strftime('%H:%M'))
         components = step['components']
         pm25_values.append(components['pm2_5'])
+        pm10_values.append(components['pm10'])
 
-    plotting(days, pm25_values)
+    plotting(days, pm25_values, pm10_values)
 
+menu()
 
-main()
