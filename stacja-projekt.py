@@ -7,9 +7,35 @@ import format_module as format
 
 
 def menu():
-    print("********************************** \n Welcome to the weather history! \n ********************************** \n"
-          " 1. Check PM 2.5 and PM 10 for the last 24 hours \n 2. Check temperature for the last 24 hours \n "
-          "**********************************")
+    print('Welcome to Adam Pruszyński\'s and Natalia Wójcik weather application using OpenWeatherMap\'s API! \n')
+
+
+def main():
+    while True:
+        choice = input("Please input 1, 2 or 3: ")
+        if choice == "1":
+            smog()
+            user = input("Would you like to check something else? Type yes or no: ")
+            if user == "yes":
+                continue
+            if user == "no":
+                break
+        if choice == '2':
+            temperature()
+            user = input("Would you like to check something more? Type yes or no: ")
+            if user == "yes":
+                continue
+            if user == "no":
+                break
+        if choice == '3':
+            max_temperature()
+            user = input("Would you like to check something more? Type yes or no: ")
+            if user == "yes":
+                continue
+            if user == "no":
+                break
+        else:
+            print("Something went wrong, please try again")
 
 
 def plotting_smog(x, y1, y2):
@@ -25,10 +51,23 @@ def plotting_smog(x, y1, y2):
 
 def plotting_temp(x,y):
     plt.bar(x, y)
-    plt.xlabel('Temperature')
+    plt.xlabel('Hour')
     plt.ylabel('Degrees Celsius')
-    plt.title('The graph of temperature in chosen location for the last 24 hours')
+    plt.title('The bar graph of temperature in chosen location for the last 24 hours')
     plt.savefig('temperature.pdf')
+    plt.show()
+
+
+def plotting_forecast(x, y):
+    plt.bar(x, y)
+    plt.xlabel('Date')
+    plt.ylabel('Degrees Celsius')
+
+    ax = plt.gca()
+    ax.set_xticks(ax.get_xticks()[::5])
+
+    plt.title('The bar graph of max temperature in chosen location for next 5 days')
+    plt.savefig('forecast.pdf')
     plt.show()
 
 
@@ -88,26 +127,36 @@ def temperature():
 
     plotting_temp(days, temperature)
 
+def max_temperature():
+    user = input("Give the adress to be checked ---> ")
+    parameters = {
+        'lat': geo.latitude(user),
+        'lon': geo.longtitude(user),
+        'appid': "0fb8ce688518ffd7d1192443399712d7",
+        'units': "metric",
+    }
+    r = requests.get("https://api.openweathermap.org/data/2.5/forecast", parameters)
+    try:
+        content = r.json()
+    except json.decoder.JSONDecodeError:
+        print("Niepoprawny format")
 
+    list_elements = content["list"]
+    days = []
+    temp_max = []
+    for step in list_elements:
+        days.append(datetime.utcfromtimestamp(step['dt']).strftime('%d/%m %H:%M'))
+        main = step['main']
+        temp_max.append(main['temp_max'])
+
+    plotting_forecast(days, temp_max)
+
+#----- mian code --------------------------------------
 if __name__ == '__main__':
     menu()
-    while True:
-        choice = input("Please input the number: ")
-        if choice == "1":
-            smog()
-            user = input("Would you like to check something more? Type yes or no: ")
-            if user == "yes":
-                continue
-            if user == "no":
-                break
-        if choice == '2':
-            temperature()
-            user = input("Would you like to check something more? Type yes or no: ")
-            if user == "yes":
-                continue
-            if user == "no":
-                break
-        else:
-            print("Something went wrong, please try again")
+    print('What would you like to check? \n 1. PM 2.5 and PM 10 for the last 24 hours \n '
+          '2. Temperature for the last 24 hours \n 3. Weather forecast for the 5 days \n')
+    main()
+
 
 
