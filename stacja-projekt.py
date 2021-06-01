@@ -20,6 +20,10 @@ def main():
                 continue
             if user == "no":
                 break
+            else:
+                print("Something went wrong, bye")
+                break
+
         if choice == '2':
             temperature()
             user = input("Would you like to check something more? Type yes or no: ")
@@ -27,12 +31,19 @@ def main():
                 continue
             if user == "no":
                 break
+            else:
+                print("Something went wrong, bye")
+                break
+
         if choice == '3':
             max_temperature()
             user = input("Would you like to check something more? Type yes or no: ")
             if user == "yes":
                 continue
             if user == "no":
+                break
+            else:
+                print("Something went wrong, bye")
                 break
         else:
             print("Something went wrong, please try again")
@@ -154,7 +165,7 @@ def max_temperature():
 #----- mian code --------------------------------------
 if __name__ == '__main__':
     menu()
-    print('What would you like to check? \n 1. PM 2.5 and PM 10 for the last 24 hours \n '
+    print('What would you like to check? \n 1. Smog condition (PM2.5 and PM10 for the last 24 hours \n '
           '2. Temperature for the last 24 hours \n 3. Weather forecast for the 5 days \n')
     main()
 
