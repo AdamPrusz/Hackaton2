@@ -7,7 +7,7 @@ import format_module as format
 
 
 def menu():
-    print('Welcome to Adam Pruszyński\'s and Natalia Wójcik weather application using OpenWeatherMap\'s API! \n')
+    print('Welcome to Weather application using OpenWeatherMap\'s API! \n')
 
 
 def main():
