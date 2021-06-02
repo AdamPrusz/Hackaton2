@@ -29,9 +29,9 @@ If you make some typo.. no worries! Our application will match the correct name 
 
 - While loop
 
--Condidtional statements
+- Condidtional statements
 
--Modules
+- Modules
 
 Have a good time!
 
