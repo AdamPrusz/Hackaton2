@@ -173,7 +173,7 @@ class Forecast_station(Smog_station):
         plotting_forecast(days, temp_max)
 
 
-#----- mian code --------------------------------------
+#----- main code --------------------------------------
 
 if __name__ == '__main__':
     menu()
