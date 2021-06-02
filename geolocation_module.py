@@ -1,11 +1,11 @@
 from geopy.geocoders import Nominatim
 
-def geo_lat(city):
+def latitude(city):
     locator = Nominatim(user_agent='myGeocoder')
     location = locator.geocode(city)
     return location.latitude
 
-def geo_lon(town):
+def longtitude(town):
     locator = Nominatim(user_agent='myGeocoder')
     location = locator.geocode(town)
     return location.longitude
