@@ -1,4 +1,4 @@
-Hi User, welcome on my weather application!
+Hi User, welcome on our weather application!
 
 There you can easly check weather for today, days in the past as well as weather for 5 days in the future.
 
