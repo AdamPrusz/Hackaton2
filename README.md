@@ -1,6 +1,6 @@
 Hi User, welcome on our weather application!
 
-There you can easly check weather for today, days in the past as well as weather for 5 days in the future.
+There you can easly check weather for the last 24 hours as well as weather for 5 days in the future.
 
 As we all known that air pollution is very imported in our daily life, so here you can check air pollution in your city or city even of your friends all over the World!
 
@@ -8,7 +8,7 @@ Let's see how is works!
 
 1. Choose one options from the menu what would you like to check. There are three options, feel free!
 
-2. Please provide name of the city (yours or that yone you have been dreaming on to visit it)
+2. Please provide name of the city (yours or that one you have been dreaming on to visit it)
 
 3. Our application uses the module which change name which has been provided by the user to longitude and latitude.
 If you make some typo.. no worries! Our application will match the correct name of the correct city!
